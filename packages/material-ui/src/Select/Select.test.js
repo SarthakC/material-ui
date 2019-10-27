@@ -440,7 +440,7 @@ describe('<Select />', () => {
         </Select>,
       );
 
-      fireEvent.click(getByRole('button'));
+      fireEvent.mouseDown(getByRole('button'));
       act(() => {
         clock.tick(99);
       });
@@ -539,7 +539,7 @@ describe('<Select />', () => {
       const { getByRole, queryByRole } = render(<ControlledWrapper />);
 
       act(() => {
-        getByRole('button').click();
+        fireEvent.mouseDown(getByRole('button'));
       });
 
       expect(getByRole('listbox')).to.be.ok;
@@ -580,9 +580,7 @@ describe('<Select />', () => {
       );
       stub(getByRole('button'), 'clientWidth').get(() => 14);
 
-      act(() => {
-        getByRole('button').click();
-      });
+      fireEvent.mouseDown(getByRole('button'));
 
       expect(getByTestId('paper').style).to.have.property('minWidth', '14px');
     });
@@ -595,9 +593,7 @@ describe('<Select />', () => {
       );
       stub(getByRole('button'), 'clientWidth').get(() => 14);
 
-      act(() => {
-        getByRole('button').click();
-      });
+      fireEvent.mouseDown(getByRole('button'));
 
       expect(getByTestId('paper').style).to.have.property('minWidth', '');
     });
@@ -716,7 +712,7 @@ describe('<Select />', () => {
         });
         const { getByRole, getAllByRole } = render(<ControlledSelectInput onChange={onChange} />);
 
-        fireEvent.click(getByRole('button'));
+        fireEvent.mouseDown(getByRole('button'));
         fireEvent.click(getAllByRole('option')[2]);
 
         expect(onChange.callCount).to.equal(1);
@@ -785,6 +781,28 @@ describe('<Select />', () => {
       const { getByRole } = render(<Select name="foo" value="" />);
 
       expect(getByRole('button')).to.have.attribute('id', 'select-foo');
+    });
+  });
+
+  describe('prop: onMouseDown', () => {
+    it('is forwarded to the trigger button', () => {
+      const handleMouseDown = spy();
+      const { getByRole } = render(<Select onMouseDown={handleMouseDown} value="" />);
+
+      fireEvent.mouseDown(getByRole('button'));
+
+      expect(handleMouseDown.callCount).to.equal(1);
+    });
+  });
+
+  describe('prop: onClick', () => {
+    it('is forwarded to the trigger button', () => {
+      const handleClick = spy();
+      const { getByRole } = render(<Select onClick={handleClick} value="" />);
+
+      fireEvent.click(getByRole('button'));
+
+      expect(handleClick.callCount).to.equal(1);
     });
   });
 });

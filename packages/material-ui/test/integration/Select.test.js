@@ -42,10 +42,7 @@ describe('<Select> integration', () => {
     it('should focus the selected item', async () => {
       const { getByTestId, getAllByRole, getByRole, queryByRole } = render(<SelectAndDialog />);
 
-      // Let's open the select component
-      // in the browser user click also focuses
-      getByRole('button').focus();
-      getByRole('button').click();
+      fireEvent.mouseDown(getByRole('button'));
 
       expect(getAllByRole('option')[1]).to.be.focused;
 
@@ -60,10 +57,7 @@ describe('<Select> integration', () => {
       const { getAllByRole, getByRole, queryByRole } = render(<SelectAndDialog />);
       expect(getByRole('button')).to.have.text('Ten');
 
-      // Let's open the select component
-      // in the browser user click also focuses
-      getByRole('button').focus();
-      getByRole('button').click();
+      fireEvent.mouseDown(getByRole('button'));
 
       expect(getAllByRole('option')[1]).to.be.focused;
 
