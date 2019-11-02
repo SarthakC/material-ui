@@ -110,18 +110,14 @@ describe('<Select />', () => {
 
     const trigger = getByRole('button');
     // simulating user click
-    act(() => {
-      fireEvent.mouseDown(trigger);
-      trigger.click();
-    });
+
+    fireEvent.mouseDown(trigger);
 
     expect(handleBlur.callCount).to.equal(0);
     expect(getByRole('listbox')).to.be.ok;
 
-    act(() => {
-      fireEvent.mouseDown(getAllByRole('option')[0]);
-      getAllByRole('option')[0].click();
-    });
+    fireEvent.mouseDown(getAllByRole('option')[0]);
+    getAllByRole('option')[0].click();
 
     expect(handleBlur.callCount).to.equal(0);
     expect(queryByRole('listbox')).to.be.null;
